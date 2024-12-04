@@ -1,0 +1,49 @@
+services:
+  appsmith:
+    image: appsmith/appsmith-ee:v1.50
+    networks:
+      - network_public
+    volumes:
+      - appsmith-data:/appsmith-stacks
+    environment:
+      - APPSMITH_CUSTOM_DOMAIN=appsmith.website.com
+      - APPSMITH_SUPERVISOR_USER=appsmith
+      - APPSMITH_SUPERVISOR_PASSWORD=secret
+
+      - APPSMITH_MONGODB_URI=mongodb://appsmith:secret@mongodb:27017/appsmith?retryWrites=true
+      - APPSMITH_REDIS_URL=redis://redis:6379/3
+
+      - APPSMITH_EMAIL_ENABLED=true
+      - APPSMITH_EMAIL_SERVER_HOST=smtp.sendgrid.net
+      - APPSMITH_EMAIL_SERVER_PORT=547
+      - APPSMITH_EMAIL_SERVER_USERNAME=user
+      - APPSMITH_EMAIL_SERVER_PASSWORD=secret
+      - APPSMITH_EMAIL_FROM_ADDRESS=no-reply@website.com
+      - APPSMITH_SMTP_AUTH_ENABLED=true
+      - APPSMITH_MAIL_SMTP_TLS_ENABLED=true
+
+      - APPSMITH_SIGNUP_DISABLED=true
+      - APPSMITH_DISABLE_INTERCOM=true
+      - APPSMITH_TELEMETRY_ENABLED=false
+      - APPSMITH_RECAPTCHA_ENABLED=false
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.appsmith.rule=Host(`appsmith.website.com`)
+        - traefik.http.routers.appsmith.entrypoints=websecure
+        - traefik.http.routers.appsmith.tls.certresolver=letsencryptresolver
+        - traefik.http.routers.appsmith.service=appsmith
+        - traefik.http.services.appsmith.loadbalancer.server.port=80
+        - traefik.http.services.appsmith.loadbalancer.passHostHeader=true
+networks:
+  network_public:
+    external: true
+    name: network_public
+volumes:
+  appsmith-data:
+    driver: local

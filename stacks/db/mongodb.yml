@@ -1,0 +1,35 @@
+services:
+  mongodb:
+    image: mongo:7
+    command: mongod --port 27017
+    networks:
+      - network_public
+    volumes:
+      - mongodb-data:/data/db
+      - mongodb-configdb:/data/configdb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mongodb
+      - MONGO_INITDB_ROOT_PASSWORD=secret
+      - PUID=1000
+      - PGID=1000
+    ports:
+      - 27017:27017
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      resources:
+        limits:
+          cpus: "1"
+          memory: 1024M
+volumes:
+  mongodb-data:
+    driver: local
+  mongodb-configdb:
+    driver: local
+networks:
+  network_public:
+    external: true
+    name: network_public

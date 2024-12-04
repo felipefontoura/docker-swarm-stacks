@@ -61,11 +61,13 @@ Docker Swarm Stacks is a collection of pre-configured stack files designed to si
 
 ### Databases
 
+- **[MongoDB](stacks/db/mongodb.yml):** NoSQL database known for its flexibility and scalability, ideal for storing and managing unstructured or semi-structured data.
 - **[PostgreSQL](stacks/db/postgres.yml):** Relational database with advanced features.
 - **[Redis](stacks/db/redis.yml):** In-memory key-value store for caching and real-time analytics.
 
 ### Applications
 
+- **[Appsmith](stacks/app/appsmith.yml):** Open-source platform to build and customize internal applications quickly and efficiently.
 - **[Evolution API](stacks/app/evolution-api.yml):** API framework for evolutionary development.
 - **[N8n](stacks/app/n8n.yml):** Workflow automation tool.
 - **[RabbitMQ](stacks/app/rabbitmq.yml):** Message broker for distributed systems, ideal for asynchronous communication and message queuing.
