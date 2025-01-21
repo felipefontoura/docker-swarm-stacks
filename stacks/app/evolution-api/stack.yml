@@ -1,0 +1,41 @@
+services:
+  evolution:
+    image: atendai/evolution-api:latest
+    command: ["node", "./dist/src/main.js"]
+    networks:
+      - network_public
+    volumes:
+      - evolution_instances:/evolution/instances
+      - evolution_store:/evolution/store
+    env_file:
+      - stack.env
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 256M
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.evolution.rule=Host(`api.evolution.website.com`)
+        - traefik.http.routers.evolution.entrypoints=websecure
+        - traefik.http.routers.evolution.tls.certresolver=letsencryptresolver
+        - traefik.http.routers.evolution.priority=1
+        - traefik.http.routers.evolution.service=evolution
+        - traefik.http.services.evolution.loadbalancer.server.port=8080
+        - traefik.http.services.evolution.loadbalancer.passHostHeader=true
+volumes:
+  evolution_instances:
+    external: true
+    name: evolution_instances
+  evolution_store:
+    external: true
+    name: evolution_store
+networks:
+  network_public:
+    name: network_public
+    external: true
