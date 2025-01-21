@@ -1,0 +1,53 @@
+services:
+  typebot_builder:
+    image: baptistearno/typebot-builder:latest
+    networks:
+      - network_public
+    env_file:
+      - stack.env
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 768M
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.typebot_builder.rule=Host(`builder.typebot.website.com`)
+        - traefik.http.routers.typebot_builder.entrypoints=websecure
+        - traefik.http.routers.typebot_builder.tls.certresolver=letsencryptresolver
+        - traefik.http.services.typebot_builder.loadbalancer.server.port=3000
+        - traefik.http.services.typebot_builder.loadbalancer.passHostHeader=true
+        - traefik.http.routers.typebot_builder.service=typebot_builder
+  typebot_viewer:
+    image: baptistearno/typebot-viewer:latest
+    networks:
+      - network_public
+    env_file:
+      - stack.env
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 768M
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.typebot_viewer.rule=Host(`viewer.typebot.website.com`)
+        - traefik.http.routers.typebot_viewer.entrypoints=websecure
+        - traefik.http.routers.typebot_viewer.tls.certresolver=letsencryptresolver
+        - traefik.http.services.typebot_viewer.loadbalancer.server.port=3000
+        - traefik.http.services.typebot_viewer.loadbalancer.passHostHeader=true
+        - traefik.http.routers.typebot_viewer.service=typebot_viewer
+networks:
+  network_public:
+    external: true
+    name: network_public

@@ -76,7 +76,7 @@ Docker Swarm Stacks is a collection of pre-configured stack files designed to si
 - **[Evolution API](stacks/app/evolution-api/):** API framework for evolutionary development.
 - **[N8n](stacks/app/n8n/):** Workflow automation tool.
 - **[RabbitMQ](stacks/app/rabbitmq/):** Message broker for distributed systems, ideal for asynchronous communication and message queuing.
-- **[Typebot](stacks/app/typebot.yml):** Chatbot builder for interactive conversations.
+- **[Typebot](stacks/app/typebot/):** Chatbot builder for interactive conversations.
 
 ---
 
