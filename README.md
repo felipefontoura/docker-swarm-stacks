@@ -63,8 +63,8 @@ Docker Swarm Stacks is a collection of pre-configured stack files designed to si
 
 ### Infrastructure
 
-- **[Traefik](stacks/infra/traefik.yml):** Application proxy and load balancer.
-- **[Portainer](stacks/infra/portainer.yml):** Platform manager for Docker and Swarm.
+- **[Traefik](stacks/infra/traefik/):** Application proxy and load balancer.
+- **[Portainer](stacks/infra/portainer/):** Platform manager for Docker and Swarm.
 
 ### Databases
 
