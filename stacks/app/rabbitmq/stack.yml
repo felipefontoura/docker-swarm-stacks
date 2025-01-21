@@ -10,11 +10,8 @@ services:
     hostname: rabbitmq
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq/
-    environment:
-      - RABBITMQ_ERLANG_COOKIE=secret
-      - RABBITMQ_DEFAULT_VHOST=default
-      - RABBITMQ_DEFAULT_USER=rabbitmq
-      - RABBITMQ_DEFAULT_PASS=secret
+    env_file:
+      - stack.env
     deploy:
       mode: replicated
       replicas: 1
