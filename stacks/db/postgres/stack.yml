@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:16-alpine
+    image: postgres:15
     networks:
       - network_public
     entrypoint: docker-entrypoint.sh
@@ -9,9 +9,8 @@ services:
       - 5432:5432
     volumes:
       - postgres-data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_PASSWORD=secret
-      - POSTGRES_INITDB_ARGS="--auth-host=scram-sha-256"
+    env_file:
+      - stack.yml
     deploy:
       mode: replicated
       replicas: 1

@@ -68,7 +68,7 @@ Docker Swarm Stacks is a collection of pre-configured stack files designed to si
 
 ### Databases
 
-- **[PostgreSQL](stacks/db/postgres.yml):** Relational database with advanced features.
+- **[PostgreSQL](stacks/db/postgres/):** Relational database with advanced features.
 - **[Redis](stacks/db/redis.yml):** In-memory key-value store for caching and real-time analytics.
 
 ### Applications
