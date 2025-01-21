@@ -1,0 +1,3 @@
+CREATE DATABASE evolution;
+CREATE USER evolution WITH ENCRYPTED PASSWORD 'secret';
+GRANT ALL PRIVILEGES ON DATABASE evolution TO evolution;
